@@ -1,0 +1,10 @@
+SENSEBOX_ID = "xxxx"
+TEMPERATURESENSOR_ID = "xxxx"
+HUMIDITY_ID = "xxxx"
+PRESSURESENSOR_ID = "xxxx"
+UVINTENSITY_ID = "xxxx"
+UVINDEX_ID = "xxxx"
+PM_ID = "xxxx"
+
+#SERIAL = "/dev/cu.usbmodem1411"
+SERIAL = "COM3"
