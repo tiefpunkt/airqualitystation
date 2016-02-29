@@ -1,0 +1,7 @@
+<?php
+$host = "localhost";
+$port = 8086;
+
+$user = "INSERT_DB_USER_HERE";
+$password = "INSERT_DB_PASSWORD_HERE";
+$db_name = "INSERT_DB_NAME_HERE";
