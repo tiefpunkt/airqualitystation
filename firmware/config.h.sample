@@ -1,0 +1,20 @@
+#ifndef config_h
+#define config_h
+#include <Arduino.h>
+
+#define HTTP_SERVER "api.example.com"
+#define HTTP_URL "/submit.php"
+
+const char* ssid = "muenchen.freifunk.net";
+const char* password = "";
+
+#define WARMUP_PERIOD (3 * 60 * 1000)
+
+byte mac[6];
+String strIPAddr;
+String strMac;
+String strDeviceId;
+String strTopicPrefix;
+String strTopicPrefixID;
+
+#endif
