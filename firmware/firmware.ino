@@ -28,7 +28,7 @@
 /* DHT declaration 
 /**********************************************/
 #include <DHT.h>
-#define DHTPIN 4
+#define DHTPIN 2
 #define DHTTYPE DHT22
 DHT dht(DHTPIN, DHTTYPE);
 String dht_data;
