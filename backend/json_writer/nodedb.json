@@ -1,0 +1,31 @@
+{
+	"5C:CF:7F:11:C9:61": {
+		"location": {
+			"latitude": 48.110841,
+			"longitude": 11.581521
+			},
+		"hostname": "tiefpunkt001",
+		"indoor": true,
+		"owner": {
+			"contact": "feinstaub@tiefpunkt.com"
+			}
+		},
+	"5C:CF:7F:01:32:1D": {
+		"hostname": "Test Board 2",
+		"indoor": true,
+		"owner": {
+			"contact": "feinstaub@tiefpunkt.com"
+			}
+		},
+	"18:FE:34:CF:34:D6": {
+		"hostname": "Streetlife 01",
+		"indoor": false,
+		"owner": {
+			"contact": "feinstaub@tiefpunkt.com"
+			},
+		"location": {
+			"latitude": 48.14713,
+			"longitude": 11.57982
+			}
+		}
+	}
