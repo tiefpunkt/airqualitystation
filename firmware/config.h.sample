@@ -2,11 +2,10 @@
 #define config_h
 #include <Arduino.h>
 
+#define WIFI_MULTI_APS wifiMulti.addAP("muenchen.freifunk.net"); wifiMulti.addAP("MyHome", "Abcd1234");
+
 #define HTTP_SERVER "api.example.com"
 #define HTTP_URL "/submit.php"
-
-const char* ssid = "muenchen.freifunk.net";
-const char* password = "";
 
 #define WARMUP_PERIOD (3 * 60 * 1000)
 
@@ -18,3 +17,13 @@ String strTopicPrefix;
 String strTopicPrefixID;
 
 #endif
+
+String Float2String(float value);
+void byteToHexString(String &dataString, byte *uidBuffer, byte bufferSize, String strSeperator);
+void connectWifi();
+void sensorDHT();
+String getDHTData();
+void sendData();
+void initDustsensor();
+boolean readDustsensor();
+uint32_t recalcSlowMovingAverage(uint32_t previousPeaks[], uint32_t slowMovingAverage);

@@ -3,11 +3,11 @@
 /*      - nodemcu-LoLin board                               */
 /*      - Shinyei PPD42NS                                   */
 /*      http://www.sca-shinyei.com/pdf/PPD42NS.pdf          */
-/*                                                          */       
+/*                                                          */
 /* Wiring Instruction:                                      */
 /*      Pin 2 of dust sensor PM2.5 -> Digital 6 (PWM)       */
 /*      Pin 3 of dust sensor       -> +5V                   */
-/*      Pin 4 of dust sensor PM1   -> Digital 3 (PMW)       */ 
+/*      Pin 4 of dust sensor PM1   -> Digital 3 (PMW)       */
 /*                                                          */
 /*      - PPD42NS Pin 1 (grey or green)  => GND             */
 /*      - PPD42NS Pin 2 (green or white)) => Pin D5 /GPIO14 */
@@ -20,12 +20,12 @@
 /************************************************************/
 
 // increment on change
-#define SOFTWARE_VERSION "20160226_01"
+#define SOFTWARE_VERSION "20160908_01"
 
 #include "config.h"
 
 /**********************************************/
-/* DHT declaration 
+/* DHT declaration
 /**********************************************/
 #include <DHT.h>
 #define DHTPIN 2
@@ -37,6 +37,9 @@ String dht_data;
 /* WiFi declarations
 /**********************************************/
 #include <ESP8266WiFi.h>
+#include <ESP8266WiFiMulti.h>
+
+ESP8266WiFiMulti wifiMulti;
 
 long start_of_operation = 0;
 /**********************************************/
@@ -56,22 +59,28 @@ void setup() {
   Serial.println(SOFTWARE_VERSION);
   DEBUG_PRINTLN("Device Identifier (MAC): ");
   DEBUG_PRINTLN(strMac);
-  
-  connectWifi(); // Start ConnecWifi 
+
+  WIFI_MULTI_APS
+
+  connectWifi(); // Start ConnecWifi
 
   dht.begin(); // Start DHT
   initDustsensor();
-  
+
   start_of_operation = millis();
 }
 
 /**********************************************/
 /* And action
 /**********************************************/
-void loop() {  
-  if (readDustsensor()) {  
+void loop() {
+  if (readDustsensor()) {
     // FIXME: option to send PIN
     sensorDHT();  // getting temperature and humidity (optional)
+
+    if(wifiMulti.run() != WL_CONNECTED) {
+        connectWifi();
+    }
 
     if (millis()-start_of_operation > WARMUP_PERIOD) {
       sendData();
@@ -133,8 +142,6 @@ void sensorBarometer() {
    data += "\", \"altitude\":\"";
    data += Float2String(altitude);
    data += "\"}";
-   publishMQTTMessage(strTopicPrefixID + "bmp",data);  
-  
 }
 
 */
@@ -142,17 +149,16 @@ void sensorBarometer() {
 /* WiFi connecting script
 /**********************************************/
 void connectWifi() {
-  WiFi.begin(ssid, password); // Start WiFI
-  
   Serial.print("Connecting ");
-  while (WiFi.status() != WL_CONNECTED) 
+  while (wifiMulti.run() != WL_CONNECTED)
   {
     delay(500);
     Serial.print(".");
   }
-  Serial.println("WiFi connected");
+  Serial.printf("WiFi connected to %s\n", WiFi.SSID().c_str());
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
+  Serial.printf(" connected to %s\n", WiFi.SSID().c_str());
 }
 
 void byteToHexString(String &dataString, byte *uidBuffer, byte bufferSize, String strSeperator) {
@@ -168,8 +174,7 @@ void byteToHexString(String &dataString, byte *uidBuffer, byte bufferSize, Strin
   dataString.toUpperCase();
 }
 
-String Float2String(float value)
-{
+String Float2String(float value) {
   // Convert a float to String with two decimals.
   char temp[15];
   String s;
