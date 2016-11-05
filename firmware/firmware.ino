@@ -30,7 +30,7 @@
 #include <DHT.h>
 #define DHTPIN 2
 #define DHTTYPE DHT22
-DHT dht(DHTPIN, DHTTYPE);
+DHT dht(DHTPIN, DHTTYPE, 25);
 String dht_data;
 
 /**********************************************/
@@ -149,6 +149,7 @@ void sensorBarometer() {
 /* WiFi connecting script
 /**********************************************/
 void connectWifi() {
+  WiFi.mode(WIFI_STA);
   Serial.print("Connecting ");
   while (wifiMulti.run() != WL_CONNECTED)
   {
