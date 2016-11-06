@@ -57,8 +57,8 @@ void setup() {
   Serial.println("## Particulate Matter Sensor ##");
   Serial.print("Software version: ");
   Serial.println(SOFTWARE_VERSION);
-  DEBUG_PRINTLN("Device Identifier (MAC): ");
-  DEBUG_PRINTLN(strMac);
+  Serial.print("Device Identifier (MAC): ");
+  Serial.println(strMac);
 
   WIFI_MULTI_APS
 
